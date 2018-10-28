@@ -4,11 +4,11 @@ from ESP32MicroPython.timeutils import RTC
 
 import ubinascii
 import json
-import logging
+#import logging
 import socket
 
-log = logging.getLogger(__name__)
-logging.basicConfig()
+#log = logging.getLogger(__name__)
+#logging.basicConfig()
 clock = RTC()
 
 SET = 'set'
@@ -141,7 +141,7 @@ class TuyaDevice(object):
         json_payload = json.dumps(json_data)
         json_payload = json_payload.replace(' ', '')  # if spaces are not removed device does not respond!
         json_payload = json_payload.encode('utf-8')
-        log.debug('json_payload=%r', json_payload)
+        #log.debug('json_payload=%r', json_payload)
 
         if command == SET:
             # need to encrypt
@@ -173,15 +173,15 @@ class GenericDevice(TuyaDevice):
         super(GenericDevice, self).__init__(dev_id, address, local_key, dev_type)
 
     def status(self):
-        log.debug('status() entry')
+        #log.debug('status() entry')
         # open device, send request, then close connection
         payload = self.generate_payload('status')
 
         data = self._send_receive(payload)
-        log.debug('status received data=%r', data)
+        #log.debug('status received data=%r', data)
 
         result = data[20:-8]  # hard coded offsets
-        log.debug('result=%r', result)
+        #log.debug('result=%r', result)
 
         if result.startswith(b'{'):
             # this is the regular expected code path
@@ -196,12 +196,13 @@ class GenericDevice(TuyaDevice):
             result = result[16:]  # remove (what I'm guessing, but not confirmed is) 16-bytes of MD5 hexdigest of payload
             cipher = AESCipher(self.local_key)
             result = cipher.decrypt(result)
-            log.debug('decrypted result=%r', result)
+            #log.debug('decrypted result=%r', result)
             if not isinstance(result, str):
                 result = result.decode()
             result = json.loads(result)
         else:
-            log.error('Unexpected status() payload=%r', result)
+            print('Unexpected status() payload=%r', result)
+            #log.error('Unexpected status() payload=%r', result)
 
         return result
 
@@ -219,7 +220,7 @@ class GenericDevice(TuyaDevice):
         payload = self.generate_payload(SET, {switch:on})
 
         data = self._send_receive(payload)
-        log.debug('set_status received data=%r', data)
+        #log.debug('set_status received data=%r', data)
 
         return data
 
@@ -249,7 +250,7 @@ class GenericDevice(TuyaDevice):
         payload = self.generate_payload(SET, {dps_id:num_secs})
 
         data = self._send_receive(payload)
-        log.debug('set_timer received data=%r', data)
+        #log.debug('set_timer received data=%r', data)
         return data
 
 

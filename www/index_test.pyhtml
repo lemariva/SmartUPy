@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script language="javascript" src="main.js"></script>
+    <link href="main.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <div class="message"></div>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="row gutter-xs">
+        {{ for device in range(0, #devices#) }}
+          <div class="row">
+            <div class="col-xs-6 col-md-3">
+              <div class="card bg-primary no-border">
+                <div class="card-values">
+                  <table width="100%">
+                    <tr>
+                      <td width="20%" align="center">
+                        <span class="fas fa-burn status_{{device}}"></span>
+                      </td>
+                      <td width="80%" align="right">
+                        <button class="btn btn-primary btn-icon sq-32" type="button" onClick="deviceData('{{device}}','status')">
+                          <span class="fas fa-sync"></span>
+                        </button>
+                        <button class="btn btn-success btn-icon sq-32" type="button" onClick="deviceData('{{device}}','turnon')">
+                          <span class="fas fa-bolt"></span>
+                        </button>
+                        <button class="btn btn-danger btn-icon sq-32" type="button" onClick="deviceData('{{device}}','turnoff')">
+                          <span class="fas fa-minus-circle"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="card-chart">
+                  <div class="display_{{device}}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{ end }}
+      </div>
+  </body>
+</html>

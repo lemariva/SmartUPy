@@ -1,0 +1,12 @@
+.card {
+    padding: 5px;
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 10px;
+    position: relative
+}
+.row.gutter-xs {
+    margin-left: 5px;
+    margin-right: 5px
+}
